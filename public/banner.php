@@ -25,9 +25,10 @@ if ($db->connect_error) {
 $ip = ip2long($_SERVER['REMOTE_ADDR']);
 $userAgent = htmlspecialchars($_SERVER['HTTP_USER_AGENT'], ENT_QUOTES, 'UTF-8');
 $pageUrl = htmlspecialchars($_SERVER['HTTP_REFERER'], ENT_QUOTES, 'UTF-8');
+$id = md5($ip.$pageUrl.$userAgent);
 
-$stmt = $db->prepare('INSERT INTO banner_views (ip_address, user_agent, page_url, view_date, views_count)
-    VALUES (?, ?, ?, NOW(), 1)
+$stmt = $db->prepare('INSERT INTO banner_views (id, ip_address, user_agent, page_url, view_date, views_count)
+    VALUES (?, ?, ?, ?, NOW(), 1)
     ON DUPLICATE KEY UPDATE
     view_date = NOW(), views_count = views_count + 1');
 if (!$stmt) {
@@ -35,7 +36,8 @@ if (!$stmt) {
 	return returnImage($img);
 }
 $stmt->bind_param(
-	'iss',
+	'siss',
+	$id,
 	$ip,
 	$userAgent,
 	$pageUrl,
@@ -58,7 +60,5 @@ function returnImage($imgPath) {
 		error_log('Can not find image path: ' . $imgFullPath);
 	}
 }
-
-
 
 ?>

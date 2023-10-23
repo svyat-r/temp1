@@ -16,6 +16,8 @@ That's why:
 
 All configs stored in env file for easier running service under container with passing configs to it.
 
+If no microservice is used, than do not see reasons to build complex structures (classes)
+
 ## Installation
 
 1. Copy .env.example to .env
