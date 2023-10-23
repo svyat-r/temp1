@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS banner_tracking DEFAULT CHARACTER SET utf8mb4 COLL
 USE banner_tracking;
 
 CREATE TABLE IF NOT EXISTS banner_views (
-    id VARCHAR(32) PRIMARY KEY,
+    id VARCHAR(32) CHARACTER SET latin1 COLLATE latin1_bin PRIMARY KEY,
     ip_address BIGINT UNSIGNED,
     user_agent VARCHAR(191),
     view_date DATETIME,
